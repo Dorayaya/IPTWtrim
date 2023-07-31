@@ -3,8 +3,6 @@
 export(dataGenFun)
 export(measureATEfun)
 export(trimSummary)
-importFrom(ggplot2,ggplot)
-importFrom(gridExtra,gird.arrange)
-importFrom(MASS,mvrnorm)
-
-
+importFrom(ggplot2, ggplot)
+importFrom(gridExtra, grid.arrange)
+importFrom(MASS, mvrnorm)
