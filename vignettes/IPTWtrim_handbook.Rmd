@@ -91,7 +91,7 @@ This table gives the description for each argument, and the default values are s
 
 | Argument    | Description                                                                                            | Default Value             |
 |:------------|:-------------------------------------------------------------------------------------------------------|:--------------------------|
-| `nsim`      | The number of simulations to perform. A positive integer.                                             | `1000`                    |
+| `nsim`      | The number of iterations to perform. A positive integer.                                             | `1000`                    |
 | `trim.p`    | The percentile of extreme weights to be trimmed on both ends. A numeric value between 0.5 and 1.      | `0.95`                    |
 | `n`         | The number of observations in each simulated dataset. A positive integer.                            | `500`                     |
 | `mu`        | The mean vector of the multivariate normal distribution for confounders x1, x2, x3.                  | `c(10, 1, 11)`            |
@@ -115,10 +115,9 @@ This function returns a matrix containing measures related to ATE estimation usi
  Here is an example with default parameter values:
 ```{r warning=FALSE, eval=TRUE, echo=TRUE}
 measureATE.example <- measureATEfun()
-head(measureATE.example)
 ```
 
-## Basic examples of summarizing results by `trimSummary`
+# Simulation Studies using `trimSummary`
 
 `trimSummary` function performs a simulation study to evaluate the performance of different weight trimming percentiles. It calculates bias, empirical standard error (EmpSE), and mean squared error (MSE) for each weight trimming percentile specified in `trimperc.try`. Additionally, the function computes summary statistics for weights, including mean of trimmed weights, standard error of mean of trimmed weights, average standard deviation of trimmed weights, average maximum trimmed weight, and average minimum trimmed weight. The function then generates three plots using `ggplot2` [@ggplot2] and `gridExtra` [@gridExtra] package to visualize the relationship between weight trimming percentile and bias, EmpSE, and MSE. 
 
@@ -126,15 +125,17 @@ This table gives the description for each argument, and the default values are s
 
 | Argument       | Description                                                                                             | Default Value                           |
 |:---------------|:--------------------------------------------------------------------------------------------------------|:----------------------------------------|
-| `nsim`         | The number of simulations to perform for each weight trimming percentile. An integer.                  | `1000`                                  |
+| `nsim`         | The number of iterations to perform for each weight trimming percentile. A positive integer.                  | `1000`                                  |
 | `n`            | The number of observations in each simulated dataset. An integer.                                      | `500`                                   |
 | `mu`           | The mean vector of the multivariate normal distribution for confounders x1, x2, x3.                   | `c(10, 1, 11)`                          |
 | `sig.mat`      | The covariance matrix of the multivariate normal distribution for confounders x1, x2, x3.             | `matrix(c(11^2, 4, 4, 4, 3^2, 3, 4, 3, 8^2), 3)` |
 | `eta`          | The coefficients of the logistic regression model for the binary outcome A.                          | `c(-1.5, 0.1, 0.3, 0.2)`               |
 | `theta`        | The coefficients of the linear regression model for the continuous outcome Y.                         | `c(110, -12, -0.3, -0.8, -0.2)`        |
 | `trimperc.try` | A numeric vector specifying the weight trimming percentiles to evaluate.                              | `c(1, 0.99, 0.95, 0.9, 0.75, 0.5)`    |
+| `seed`         | An optional seed value for reproducibility of simulations. Default to `NULL`.                         | `20739377` (if not specified)           |
 
-The function performs a simulation study for each specified weight trimming percentile and calculates the following metrics for each percentile. 
+
+The function performs a simulation study for each specified weight trimming percentile, generates 3 plots to visualize the relationship between weight trimming percentile and bias, EmpSE, and MSE. Also, it calculates the following metrics for each percentile. 
 
 | Metrics         | Description                                                                                     |
 |:----------------|:------------------------------------------------------------------------------------------------|
@@ -148,3 +149,19 @@ The function performs a simulation study for each specified weight trimming perc
 | `bias`          | The difference between the estimated and true ATE.                                            |
 | `ese`           | Empirical standard error of the estimator, computed as the square root of mse - bias^2.       |
 | `mse`           | The mean squared error (MSE) of the ATE estimator.                                           |
+
+
+## Simulation results
+Let us run the simultion with default parameter values and see the results:
+```{r warning=FALSE, eval=TRUE, echo=TRUE}
+trimSummary.example <- trimSummary()
+trimSummary.example
+```
+
+# Package Testings
+
+## R CMD Checks
+
+To ensure the proper design and structure of this package, it is advisable to perform an R CMD Check. This can be easily accomplished using the `check` function available in the `devtools` package. You can execute the check command by calling `devtools::check`. This process will evaluate the package for any potential issues, ensuring that it adheres to the required standards and guidelines.
+
+Currently our package passes all the R CMD Checks. 

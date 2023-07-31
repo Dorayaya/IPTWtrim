@@ -8,7 +8,7 @@
 #' to the weights calculated based on the estimated propensity scores to reduce the impact
 #' of extreme weights.
 #'
-#' @param nsim The number of simulations to perform. A positive integer.
+#' @param nsim The number of iterations to perform. A positive integer.
 #' @param trim.p The percentile of extreme weights to be trimmed on both ends.
 #' A numeric value between 0.5 and 1. For example, 0.9 represents trimming the top 10%
 #' and bottom 10% of the weights.
@@ -36,6 +36,44 @@ measureATEfun <- function(nsim = 1000, trim.p = 0.95, n = 500,
                                                                 4, 3^2, 3,
                                                                 4, 3, 8^2), 3),
                           eta = c(-1.5,0.1, 0.3, 0.2), theta =  c(110, -12, -0.3, -0.8, -0.2)){
+  
+  # nsim must be a positive integer 
+  if (!is.numeric(nsim) || length(nsim) != 1 || nsim <= 0 || round(nsim) != nsim) {
+    stop("the number of iterations must be a positive integer")
+  }
+  
+  # trim.p must be a number between 0.5 and 1
+  if (!is.numeric(trim.p) || length(trim.p) != 1 || trim.p < 0.5 || trim.p>1) {
+    stop("the trimming percentile must be a number between 0.5 and 1")
+  }
+  
+  # n must be a positive integer
+  if (!is.numeric(n) || length(n) != 1 || n <= 0 || round(n) != n) {
+    stop("the sample size must be a positive integer")
+  }
+  
+  # mu must be a numeric vector of length 3
+  if (!is.numeric(mu) || length(mu) != 3 ) {
+    stop("the mean vector must be a numeric vector of length 3")
+  }
+  
+  ## sigma.mat must be a numeric symmetric 3*3 matrix
+  if (!is.numeric(sigma.mat) || !isSymmetric(sigma.mat) || !is.matrix(sigma.mat) ||
+      ncol(sigma.mat) != 3 || nrow(sigma.mat) != 3) {
+    stop("the covariance matrix sigma must be a numeric symmetric 3 by 3 matrix")
+  }
+  
+  # eta must be a numeric vector of length 4
+  if (!is.numeric(eta) || length(eta) != 4 ) {
+    stop("eta must be a numeric vector of length 4")
+  }
+  
+  # theta must be a numeric vector of length 5
+  if (!is.numeric(theta) || length(theta) != 5 ) {
+    stop("theta must be a numeric vector of length 5")
+  }
+  
+  
   psi1.trim <- c()
   mean.w.trim <- c()
   min.trim <- c()
@@ -65,7 +103,7 @@ measureATEfun <- function(nsim = 1000, trim.p = 0.95, n = 500,
   }
   bias <- mean(psi1.trim) - theta[2]
   ese <- sd(psi1.trim)
-  mse <- mean((psi1.trim + 12)^2)
+  mse <- mean((psi1.trim -theta[2])^2)
   weight.mean <- mean(mean.w.trim)
   weight.ese <- sd(mean.w.trim)
   weight.asd <- mean(sd.w.trim)
