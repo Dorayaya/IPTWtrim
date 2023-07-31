@@ -5,10 +5,6 @@ Authors@R:
     person("Xiaoya", "Wang", , "x932wang@uwaterloo.ca", role = c("aut", "cre"))
 Description: This package provides tools for performing analysis on Inverse Probability of Treatment Weighting (IPTW) with trimming. It allows users to estimate the Average Treatment Effect (ATE) using IPTW with the option to trim extreme weights. The package is designed to handle data generated from specified statistical models and provides functions to generate synthetic data, estimate the ATE using IPTW, and perform sensitivity analysis by varying the trimming percentile.
 License: MIT + file LICENSE
-Imports: 
-    MASS
-    ggplot2
-    gridExtra
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 Suggests: 
