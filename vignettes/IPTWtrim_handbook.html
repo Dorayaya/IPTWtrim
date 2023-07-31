@@ -1527,6 +1527,7 @@ package</h1>
 </div>
 
 
+<div style="page-break-after: always;"></div>
 <p>Welcome to the <code>IPTWtrim</code> package handbook! This vignette
 provides examples and usage instructions for the functions available in
 the <code>IPTWtrim</code> package. The package is designed to facilitate
@@ -1591,13 +1592,15 @@ assess the performance of different weighting percentile.</p>
 ##     ├── IPTWtrim_handbook.html
 ##     └── references.bib</code></pre>
 </div>
-<div id="basic-examples-for-data-generation" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Basic examples for
+<div id="basic-examples-of-data-generation" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Basic examples of
 data generation</h2>
 <div id="installation" class="section level3" number="2.2.1">
 <h3><span class="header-section-number">2.2.1</span> Installation</h3>
-<p>First, install and load the required R packages (<code>MASS</code>,
-<code>ggplot2</code>, <code>gridExtra</code> packages).</p>
+<p>First, install and load the required R packages: <code>MASS</code>
+<span class="citation">(Ripley et al. 2013)</span>, <code>ggplot2</code>
+<span class="citation">(Wickham 2011)</span>, <code>gridExtra</code>
+<span class="citation">(Auguie, Antonov, and Auguie 2017)</span>.</p>
 <pre class="r"><code>install.packages(&quot;MASS&quot;)
 install.packages(&quot;ggplot2&quot;)
 install.packages(&quot;gridExtra&quot;)
@@ -1605,10 +1608,13 @@ library(MASS)
 library(ggplot2)
 library(gridExtra)</code></pre>
 <p>First, install and load the R package.</p>
-<pre class="r"><code>library(devtools)
-install_github(&quot;Dorayaya/IPTWtrim&quot;,
-               build_vignettes = TRUE)
-library(IPTWtrim)</code></pre>
+<pre class="r"><code>library(devtools)</code></pre>
+<pre><code>## Loading required package: usethis</code></pre>
+<pre class="r"><code>install_github(&quot;Dorayaya/IPTWtrim&quot;,
+               build_vignettes = TRUE)</code></pre>
+<pre><code>## Skipping install of &#39;IPTWtrim&#39; from a github remote, the SHA1 (97ec925d) has not changed since last install.
+##   Use `force = TRUE` to force installation</code></pre>
+<pre class="r"><code>library(IPTWtrim)</code></pre>
 </div>
 <div id="datagenfun-generate-data-for-our-specific-setting" class="section level3" number="2.2.2">
 <h3><span class="header-section-number">2.2.2</span>
@@ -1669,16 +1675,316 @@ continuous outcome Y.</td>
 </tr>
 </tbody>
 </table>
+<p>The function will return a data frame including <span class="math inline">\(A\)</span>, <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>, <span class="math inline">\(X_3\)</span> and <span class="math inline">\(Y\)</span>. Here is an example with default
+parameter values:</p>
+<pre class="r"><code>dataExample &lt;- dataGenFun()
+head(dataExample)</code></pre>
+<pre><code>##          x1         x2        x3 A         Y
+## 1 21.333605 -3.2926934  5.820882 1  90.87478
+## 2 24.504614 -0.1058204  2.014704 0 103.33185
+## 3  2.197010  1.7167203  9.583404 0 105.03218
+## 4 11.249070  2.6187498  9.709076 1  89.78573
+## 5 27.212422 -0.4180009 16.440288 1  87.57726
+## 6  8.066064  4.6266053 12.888911 1  89.10101</code></pre>
 </div>
+</div>
+<div id="basic-examples-of-estimation-of-average-treatment-effect-ate-using-measureatefun" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Basic examples of
+estimation of Average Treatment Effect (ATE) using
+<code>measureATEfun</code></h2>
+<p>The <code>measureATEfun</code> function estimates the Average
+Treatment Effect (ATE) using Inverse Probability of Treatment Weighting
+(IPTW) based on the data generated from the <code>dataGenFun</code>
+function. It allows users to evaluate the causal effect of the binary
+treatment <span class="math inline">\(A\)</span> on the continuous
+outcome <span class="math inline">\(Y\)</span> in the presence of
+confounding variables (<span class="math inline">\(x1\)</span>, <span class="math inline">\(x2\)</span>, <span class="math inline">\(x3\)</span>), and assess the performence for a
+particular weight trimming percentile. The function uses IPTW to balance
+the distribution of covariates across treatment groups and provides
+options for trimming extreme weights and using robust standard errors
+for effect estimation.</p>
+<p>This table gives the description for each argument, and the default
+values are set based on the simulation design for my STAT900 final
+project.</p>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="72%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Argument</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>nsim</code></td>
+<td align="left">The number of simulations to perform. A positive
+integer.</td>
+<td align="left"><code>1000</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>trim.p</code></td>
+<td align="left">The percentile of extreme weights to be trimmed on both
+ends. A numeric value between 0.5 and 1.</td>
+<td align="left"><code>0.95</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>n</code></td>
+<td align="left">The number of observations in each simulated dataset. A
+positive integer.</td>
+<td align="left"><code>500</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>mu</code></td>
+<td align="left">The mean vector of the multivariate normal distribution
+for confounders x1, x2, x3.</td>
+<td align="left"><code>c(10, 1, 11)</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>sig.mat</code></td>
+<td align="left">The covariance matrix of the multivariate normal
+distribution for confounders x1, x2, x3.</td>
+<td align="left"><code>matrix(c(11^2, 4, 4, 4, 3^2, 3, 4, 3, 8^2), 3)</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>eta</code></td>
+<td align="left">The coefficients of the logistic regression model for
+the binary treatment A.</td>
+<td align="left"><code>c(-1.5, 0.1, 0.3, 0.2)</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>theta</code></td>
+<td align="left">The coefficients of the linear regression model for the
+continuous outcome Y.</td>
+<td align="left"><code>c(110, -12, -0.3, -0.8, -0.2)</code></td>
+</tr>
+</tbody>
+</table>
+<p>This function returns a matrix containing measures related to ATE
+estimation using trimming and the summary statistics for the estimated
+weights. The columns include:</p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="85%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Measure</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>bias</code></td>
+<td align="left">The difference between the estimated and true ATE.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>mse</code></td>
+<td align="left">The mean squared error (MSE) of the ATE estimator.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>weight.mean</code></td>
+<td align="left">The average of trimmed weights across all
+simulations.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>weight.ese</code></td>
+<td align="left">The empirical standard error of the mean of trimmed
+weights.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>weight.asd</code></td>
+<td align="left">The average standard deviation of trimmed weights
+across all simulations.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>weight.max</code></td>
+<td align="left">The average maximum trimmed weight across all
+simulations.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>weight.min</code></td>
+<td align="left">The average minimum trimmed weight across all
+simulations.</td>
+</tr>
+</tbody>
+</table>
+<p>Here is an example with default parameter values:</p>
+<pre class="r"><code>measureATE.example &lt;- measureATEfun()
+head(measureATE.example)</code></pre>
+<pre><code>##           bias     mse weight.mean weight.ese weight.asd weight.max weight.min
+## [1,] -3.293662 11.0277    1.503528 0.05535059  0.8714617   4.351581   1.003258</code></pre>
+</div>
+<div id="basic-examples-of-summarizing-results-by-trimsummary" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Basic examples of
+summarizing results by <code>trimSummary</code></h2>
+<p><code>trimSummary</code> function performs a simulation study to
+evaluate the performance of different weight trimming percentiles. It
+calculates bias, empirical standard error (EmpSE), and mean squared
+error (MSE) for each weight trimming percentile specified in
+<code>trimperc.try</code>. Additionally, the function computes summary
+statistics for weights, including mean of trimmed weights, standard
+error of mean of trimmed weights, average standard deviation of trimmed
+weights, average maximum trimmed weight, and average minimum trimmed
+weight. The function then generates three plots using
+<code>ggplot2</code> <span class="citation">(Wickham 2011)</span> and
+<code>gridExtra</code> <span class="citation">(Auguie, Antonov, and
+Auguie 2017)</span> package to visualize the relationship between weight
+trimming percentile and bias, EmpSE, and MSE.</p>
+<p>This table gives the description for each argument, and the default
+values are set based on the simulation design for my STAT900 final
+project.</p>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="64%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Argument</th>
+<th align="left">Description</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>nsim</code></td>
+<td align="left">The number of simulations to perform for each weight
+trimming percentile. An integer.</td>
+<td align="left"><code>1000</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>n</code></td>
+<td align="left">The number of observations in each simulated dataset.
+An integer.</td>
+<td align="left"><code>500</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>mu</code></td>
+<td align="left">The mean vector of the multivariate normal distribution
+for confounders x1, x2, x3.</td>
+<td align="left"><code>c(10, 1, 11)</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>sig.mat</code></td>
+<td align="left">The covariance matrix of the multivariate normal
+distribution for confounders x1, x2, x3.</td>
+<td align="left"><code>matrix(c(11^2, 4, 4, 4, 3^2, 3, 4, 3, 8^2), 3)</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>eta</code></td>
+<td align="left">The coefficients of the logistic regression model for
+the binary outcome A.</td>
+<td align="left"><code>c(-1.5, 0.1, 0.3, 0.2)</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>theta</code></td>
+<td align="left">The coefficients of the linear regression model for the
+continuous outcome Y.</td>
+<td align="left"><code>c(110, -12, -0.3, -0.8, -0.2)</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>trimperc.try</code></td>
+<td align="left">A numeric vector specifying the weight trimming
+percentiles to evaluate.</td>
+<td align="left"><code>c(1, 0.99, 0.95, 0.9, 0.75, 0.5)</code></td>
+</tr>
+</tbody>
+</table>
+<p>The function performs a simulation study for each specified weight
+trimming percentile and calculates the following metrics for each
+percentile.</p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="85%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Metrics</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>trim.perc</code></td>
+<td align="left">Weight trimming percentile evaluated (e.g. 1, 0.99,
+0.95, 0.9, 0.75, 0.5).</td>
+</tr>
+<tr class="even">
+<td align="left"><code>trim.prop</code></td>
+<td align="left">Weight trimming proportion calculated as (1 -
+<code>trim.perc</code>) * 2.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>weight.mean</code></td>
+<td align="left">The average of trimmed weights across all
+simulations.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>weight.ese</code></td>
+<td align="left">The empirical standard error of the mean of trimmed
+weights.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>weight.asd</code></td>
+<td align="left">The average standard deviation of trimmed weights
+across all simulations.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>weight.max</code></td>
+<td align="left">The average maximum trimmed weight across all
+simulations.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>weight.min</code></td>
+<td align="left">The average minimum trimmed weight across all
+simulations.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>bias</code></td>
+<td align="left">The difference between the estimated and true ATE.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>ese</code></td>
+<td align="left">Empirical standard error of the estimator, computed as
+the square root of mse - bias^2.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>mse</code></td>
+<td align="left">The mean squared error (MSE) of the ATE estimator.</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="bibliography" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-gridExtra" class="csl-entry">
+Auguie, Baptiste, Anton Antonov, and Maintainer Baptiste Auguie. 2017.
+<span>“Package <span>‘gridExtra’</span>.”</span> <em>Miscellaneous
+Functions for <span>“Grid”</span> Graphics</em>.
+</div>
+<div id="ref-mass" class="csl-entry">
+Ripley, Brian, Bill Venables, Douglas M Bates, Kurt Hornik, Albrecht
+Gebhardt, David Firth, and Maintainer Brian Ripley. 2013. <span>“Package
+<span>‘Mass’</span>.”</span> <em>Cran r</em> 538: 113–20.
+</div>
 <div id="ref-stuart2010matching" class="csl-entry">
 Stuart, Elizabeth A. 2010. <span>“Matching Methods for Causal Inference:
 A Review and a Look Forward.”</span> <em>Statistical Science: A Review
 Journal of the Institute of Mathematical Statistics</em> 25 (1): 1.
+</div>
+<div id="ref-ggplot2" class="csl-entry">
+Wickham, Hadley. 2011. <span>“Ggplot2.”</span> <em>Wiley
+Interdisciplinary Reviews: Computational Statistics</em> 3 (2): 180–85.
 </div>
 </div>
 </div>

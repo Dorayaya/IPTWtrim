@@ -74,17 +74,17 @@ trimSummary <- function(nsim = 1000, n = 500, mu = c(10, 1, 11),
                      bias = bias, ese = ese, mse = mse)
 
   # Create three plots using ggplot2
-  plot_bias <- ggplot2::ggplot(data, aes(x = trim.prop, y = bias)) +
-    geom_line() +
-    labs(x = "Weight Trimming Proportion", y = "Bias")
+  plot_bias <- ggplot2::ggplot(data, ggplot2::aes(x = trim.prop, y = bias)) +
+    ggplot2::geom_line() +
+    ggplot2::labs(x = "Weight Trimming Proportion", y = "Bias")
 
-  plot_ese <- ggplot2::ggplot(data, aes(x = trim.prop, y = ese)) +
-    geom_line() +
-    labs(x = "Weight Trimming Proportion", y = "EmpSE")
+  plot_ese <- ggplot2::ggplot(data, ggplot2::aes(x = trim.prop, y = ese)) +
+    ggplot2::geom_line() +
+    ggplot2::labs(x = "Weight Trimming Proportion", y = "EmpSE")
 
-  plot_mse <- ggplot2::ggplot(data, aes(x = trim.prop, y = mse)) +
-    geom_line() +
-    labs(x = "Weight Trimming Proportion", y = "MSE")
+  plot_mse <- ggplot2::ggplot(data, ggplot2::aes(x = trim.prop, y = mse)) +
+    ggplot2::geom_line() +
+    ggplot2::labs(x = "Weight Trimming Proportion", y = "MSE")
 
   # Arrange the three plots side by side using grid.arrange from gridExtra
   combined_plots <- gridExtra::grid.arrange(plot_bias, plot_ese, plot_mse, ncol = 3)
