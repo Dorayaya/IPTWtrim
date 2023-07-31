@@ -20,6 +20,7 @@
 #' @return A data frame containing the generated data with columns x1, x2, x3, A, Y.
 #'
 #' @importFrom MASS mvrnorm
+#' @export 
 
 dataGenFun <- function(n = 500,  mu = c(10, 1, 11), sigma.mat = matrix(c(11^2, 4, 4,
                                                                        4, 3^2, 3,

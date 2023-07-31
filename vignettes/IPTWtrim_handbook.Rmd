@@ -3,6 +3,11 @@ title: "Introduction to `IPTWtrim` R package "
 author: "Xiaoya Wang"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 output: 
+  pdf_document:
+    number_sections: true
+    toc: TRUE
+    toc_depth: 3
+    citation_package: natbib
   html_document:
     number_sections: true
     toc: true
@@ -10,11 +15,6 @@ output:
       collapsed: false
       smooth_scroll: true
     toc_depth: 3
-  pdf_document:
-    number_sections: true
-    toc: TRUE
-    toc_depth: 3
-    citation_package: natbib
 bibliography: references.bib
 biblio-style: apalike
 reference-section-title: References
@@ -76,5 +76,9 @@ This table gives the description for each argument, and the default values are s
 | `eta`       | The coefficients of the logistic regression model for the binary outcome A.                        | `c(-1.5, 0.1, 0.3, 0.2)` |
 | `theta`     | The coefficients of the linear regression model for the continuous outcome Y.                       | `c(110, -12, -0.3, -0.8, -0.2)` |
 
+```{r}
+dataExample <- dataGenFun()
+head(dataExample)
+```
 
 
