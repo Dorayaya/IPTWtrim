@@ -58,8 +58,8 @@ measureATEfun <- function(nsim = 1000, trim.p = 0.95, n = 500,
   }
   
   ## sigma.mat must be a numeric symmetric 3*3 matrix
-  if (!is.numeric(sigma.mat) || !isSymmetric(sigma.mat) || !is.matrix(sigma.mat) ||
-      ncol(sigma.mat) != 3 || nrow(sigma.mat) != 3) {
+  if (!is.numeric(sig.mat) || !isSymmetric(sig.mat) || !is.matrix(sig.mat) ||
+      ncol(sig.mat) != 3 || nrow(sig.mat) != 3) {
     stop("the covariance matrix sigma must be a numeric symmetric 3 by 3 matrix")
   }
   
