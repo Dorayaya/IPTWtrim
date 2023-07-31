@@ -42,7 +42,25 @@ fs::dir_tree(path=PATH, type="any")
 
 ## Basic examples for data generation 
 ### Installation
-First, install and load the R package.
+First, install and load the required R packages (`MASS`, `ggplot2`, `gridExtra` packages).
+```{r warning=FALSE, eval=FALSE, echo=TRUE}
+install.packages("MASS")
+install.packages("ggplot2")
+install.packages("gridExtra")
+library(MASS)
+library(ggplot2)
+library(gridExtra)
+```
+
+
+First, install and load the R package. 
+```{r warning=FALSE, eval=FALSE, echo=TRUE}
+library(devtools)
+install_github("Dorayaya/IPTWtrim",
+               build_vignettes = TRUE)
+library(IPTWtrim)
+```
+
 
 ### `dataGenFun()`: Generate Data for Our Specific Setting
 

@@ -31,44 +31,32 @@
 \details{
   The \code{dataGenFun} function generates synthetic data by following these steps:
 
-  \enumerate{
-    \item It generates 'n' random samples from a multivariate normal distribution using \code{\link[MASS:mvrnorm]{MASS::mvrnorm}}, with means specified by \code{mu} and covariance matrix specified by \code{sig.mat}.
-    \item It computes the logistic transformation of a linear combination of the predictor variables 'x1', 'x2', and 'x3', along with corresponding coefficients \code{eta}, to determine the probability of treatment assignment ('A'). The logistic function is used to constrain the probability between 0 and 1.
-    \item It generates binary treatment indicators ('A') for each observation by sampling from a binomial distribution with probability \code{pi}.
-    \item It computes the outcome variable ('Y') for each observation using a linear combination of the treatment indicator 'A', confounding variables 'x1', 'x2', and 'x3', and corresponding coefficients \code{theta}. Additionally, a random error term is added to 'Y' by sampling from a normal distribution with mean 0 and standard deviation 1.
-    \item The generated variables 'x1', 'x2', 'x3', 'A', and 'Y' are combined into a data frame, and the resulting dataset is returned.
-  }
+  - It generates 'n' random samples from a multivariate normal distribution using \code{\link[MASS:mvrnorm]{MASS::mvrnorm}}, with means specified by \code{mu} and covariance matrix specified by \code{sig.mat}.
+  - It computes the logistic transformation of a linear combination of the predictor variables 'x1', 'x2', and 'x3', along with corresponding coefficients \code{eta}, to determine the probability of treatment assignment ('A'). The logistic function is used to constrain the probability between 0 and 1.
+  - It generates binary treatment indicators ('A') for each observation by sampling from a binomial distribution with probability \code{pi}.
+  - It computes the outcome variable ('Y') for each observation using a linear combination of the treatment indicator 'A', confounding variables 'x1', 'x2', and 'x3', and corresponding coefficients \code{theta}. Additionally, a random error term is added to 'Y' by sampling from a normal distribution with mean 0 and standard deviation 1.
+  - The generated variables 'x1', 'x2', 'x3', 'A', and 'Y' are combined into a data frame, and the resulting dataset is returned.
 }
 \value{
   The function returns a data frame containing the generated dataset with 'n' observations and the following columns:
 
-  \item{x1}{The values of the first confounding variable.}
+  - \item{x1}{The values of the first confounding variable.}
 
-  \item{x2}{The values of the second confounding variable.}
+  - \item{x2}{The values of the second confounding variable.}
 
-  \item{x3}{The values of the third confounding variable.}
+  - \item{x3}{The values of the third confounding variable.}
 
-  \item{A}{The binary treatment indicator (0 or 1) representing the treatment assignment.}
+  - \item{A}{The binary treatment indicator (0 or 1) representing the treatment assignment.}
 
-  \item{Y}{The outcome variable generated based on the specified statistical model.}
+  - \item{Y}{The outcome variable generated based on the specified statistical model.}
 }
 \author{
   Xiaoya Wang
 }
 \note{
-  \item The function relies on the \code{MASS} package to generate multivariate normal samples (\code{\link[MASS:mvrnorm]{MASS::mvrnorm}}) and the \code{\link{rbinom}} and \code{\link{rnorm}} functions for random binomial and normal variates, respectively. Make sure to install and load the \code{MASS} package before using this function.
+  - The function relies on the \code{MASS} package to generate multivariate normal samples (\code{\link[MASS:mvrnorm]{MASS::mvrnorm}}) and the \code{\link{rbinom}} and \code{\link{rnorm}} functions for random binomial and normal variates, respectively. Make sure to install and load the \code{MASS} package before using this function.
 
-  \item The function assumes that the input arguments \code{mu}, \code{sig.mat}, \code{eta}, and \code{theta} are appropriately specified according to the desired statistical model. Incorrectly specified parameters may lead to unexpected or nonsensical results.
+  - The function assumes that the input arguments \code{mu}, \code{sig.mat}, \code{eta}, and \code{theta} are appropriately specified according to the desired statistical model. Incorrectly specified parameters may lead to unexpected or nonsensical results.
 
-  \item It is important to note that the generated data is purely synthetic and is not based on any real-world data source. The user should exercise caution and thoroughly understand the underlying statistical model before using the generated data for any analyses or applications.
+  - It is important to note that the generated data is purely synthetic and is not based on any real-world data source. The user should exercise caution and thoroughly understand the underlying statistical model before using the generated data for any analyses or applications.
 }
-\examples{
-# Generate a dataset with 1000 observations
-data <- dataGenFun(n = 1000,
-                   mu = c(0, 0, 0),
-                   sig.mat = diag(3),
-                   eta = c(1, 2, -1, 0.5),
-                   theta = c(0, 1, 0.5, -0.3, 0.2))
-
-# View the first few rows of the generated
-

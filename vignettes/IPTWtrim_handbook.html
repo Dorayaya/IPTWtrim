@@ -1596,7 +1596,19 @@ assess the performance of different weighting percentile.</p>
 data generation</h2>
 <div id="installation" class="section level3" number="2.2.1">
 <h3><span class="header-section-number">2.2.1</span> Installation</h3>
+<p>First, install and load the required R packages (<code>MASS</code>,
+<code>ggplot2</code>, <code>gridExtra</code> packages).</p>
+<pre class="r"><code>install.packages(&quot;MASS&quot;)
+install.packages(&quot;ggplot2&quot;)
+install.packages(&quot;gridExtra&quot;)
+library(MASS)
+library(ggplot2)
+library(gridExtra)</code></pre>
 <p>First, install and load the R package.</p>
+<pre class="r"><code>library(devtools)
+install_github(&quot;Dorayaya/IPTWtrim&quot;,
+               build_vignettes = TRUE)
+library(IPTWtrim)</code></pre>
 </div>
 <div id="datagenfun-generate-data-for-our-specific-setting" class="section level3" number="2.2.2">
 <h3><span class="header-section-number">2.2.2</span>
