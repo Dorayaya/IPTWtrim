@@ -19,7 +19,7 @@ The IPTWtrim package contains 3 main functions:
   summary statistics for weights. See \link{trimSummary} for details.
 }
 
-For examples and usage, see \code{vignette("handbook")}.
+For examples and usage, see \code{vignette("IPTWtrim_handbook")}.
 }
 \details{
 The IPTWtrim package provides functions for conducting causal inference with inverse probability
