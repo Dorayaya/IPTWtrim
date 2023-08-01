@@ -13,7 +13,7 @@
 }
 \arguments{
   \item{nsim}{
-    The number of simulations to perform for each weight trimming percentile. An integer. Default to 1000.
+    The number of iterations to perform for each weight trimming percentile. An integer. Default to 1000.
   }
 
   \item{n}{
@@ -40,7 +40,6 @@
     A numeric vector specifying the weight trimming percentiles to evaluate. Each value should be between 0.5 and 1 (both inclusive) to represent the desired percentile for weight trimming.
   }
   \item{seed}{An optional seed value for reproducibility of simulations. Default to 20739377.}
-}
 }
 \details{
   The \code{trimSummary} function performs a simulation study to evaluate the performance of different weight trimming percentiles. It generates \code{nsim} datasets for each weight trimming percentile in \code{trimperc.try} and calculates bias, EmpSE, and MSE for each percentile. Additionally, it computes summary statistics for weights, including mean of trimmed weights, standard error of mean of trimmed weights, average standard deviation of trimmed weights, average maximum trimmed weight, and average minimum trimmed weight. The function then generates three plots using \code{ggplot2} to visualize the relationship between weight trimming percentile and bias, EmpSE, and MSE.
