@@ -3,11 +3,6 @@ title: "Introduction to `IPTWtrim` R package "
 author: "Xiaoya Wang"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 output: 
-  pdf_document:
-    number_sections: true
-    toc: TRUE
-    toc_depth: 3
-    citation_package: natbib
   html_document:
     number_sections: true
     toc: true
@@ -15,6 +10,11 @@ output:
       collapsed: false
       smooth_scroll: true
     toc_depth: 3
+  pdf_document:
+    number_sections: true
+    toc: TRUE
+    toc_depth: 3
+    citation_package: natbib
 bibliography: references.bib
 biblio-style: apalike
 reference-section-title: References
@@ -134,7 +134,7 @@ The table provides a description for each argument, with default values set base
 | `eta`          | The coefficients of the logistic regression model for the binary outcome A.                          | `c(-1.5, 0.1, 0.3, 0.2)`               |
 | `theta`        | The coefficients of the linear regression model for the continuous outcome Y.                         | `c(110, -12, -0.3, -0.8, -0.2)`        |
 | `trimperc.try` | A numeric vector specifying the weight trimming percentiles to evaluate.                              | `c(1, 0.99, 0.95, 0.9, 0.75, 0.5)`    |
-| `seed`         | An optional seed value for reproducibility of simulations. Default to `NULL`.                         | `20739377` (if not specified)           |
+| `seed`         | An optional seed value for reproducibility of simulations. Default to `NULL`.                         | `20739377` |
 
 
 The function performs a simulation study for each specified weight trimming percentile, generates three plots to visualize the relationship between the weight trimming percentile and bias, EmpSE, and MSE. Also, it calculates the following metrics for each percentile.
