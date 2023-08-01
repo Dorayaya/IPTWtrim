@@ -10,6 +10,7 @@ Imports:
     MASS,
     ggplot2,
     gridExtra
+LazyData: true
 Depends: R (>= 3.6.0)
 Suggests: 
     rmarkdown, 
